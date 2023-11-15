@@ -22,7 +22,6 @@ intents.message_content = True
 client = commands.Bot(command_prefix="!", intents=intents)
 
 
-
 # This is a slash command that calls the GPT-3 API to generate a response and sends it back to the user on discord
 @client.tree.command(name='query_gpt', description='Ask GPT a question')
 @app_commands.describe(query = "Ask GPT a question")
@@ -103,15 +102,25 @@ async def on_message(message):
 
 
 
-
+# Decorator to register an error handler for application command errors in the bot
 @client.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    # Check if the error is a command cooldown error
     if isinstance(error, app_commands.CommandOnCooldown):
+        # Send an ephemeral message informing the user of the cooldown with the remaining time
         await interaction.response.send_message(f"Please wait for {round(error.retry_after, 0)} seconds before running the command again!", ephemeral=True)
     else:
+        # [Optional: Modify this part to handle other types of errors appropriately]
+        # Currently, sends the same cooldown message for all types of errors, which may not be intended
         await interaction.response.send_message(f"Please wait for {round(error.retry_after, 0)} seconds before running the command again!", ephemeral=True)
+
 
 
 # This is the code that runs the bot.
-# Make sure to replace the DISCORD_TOKEN with your bot's token.
-client.run(os.environ.get('DISCORD_TOKEN'))
+# Make sure to replace the DISCORD_TOKEN below with your bot's token.
+# Get your bot token from the discord developer portal: https://discordapp.com/developers/applications/
+# Use these articles to help you get started:
+#  https://www.writebots.com/discord-bot-token/
+#  https://realpython.com/how-to-make-a-discord-bot-python/
+
+client.run('DISCORD_TOKEN')
