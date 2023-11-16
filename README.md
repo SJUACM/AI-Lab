@@ -1,5 +1,15 @@
 # ACM x Headstarter AI Lab
 
+<div>
+    <a href="https://www.loom.com/share/d1b1cbd70d574749a8820f1644400b35">
+      <p>Headstarter x ACM AI Meeting Recording</p>
+    </a>
+    <a href="https://www.loom.com/share/d1b1cbd70d574749a8820f1644400b35">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/d1b1cbd70d574749a8820f1644400b35-1699918076218-with-play.gif">
+    </a>
+  </div>
+
+# OpenAI 
 If you don't have an OpenAI Account or API Key:
   - Sign up for an account [here](https://platform.openai.com/)
 
