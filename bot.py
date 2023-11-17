@@ -5,12 +5,13 @@ from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import cooldown, BucketType
 from discord.app_commands import Choice
-import openai
+from openai import OpenAI
 from PIL import Image
 import csv
 import aiohttp
 import base64
 
+openai_client = OpenAI(api_key="<INSERT OPENAI_API_KEY HERE>")
 
 # Initialize Discord bot intents with default settings, including basic events like join/leave.
 intents = discord.Intents.default()
@@ -28,7 +29,7 @@ client = commands.Bot(command_prefix="!", intents=intents)
 @app_commands.checks.cooldown(1, 60, key=lambda i: (i.guild_id, i.user.id)) # This prevents people from spamming the command. They can only use it once every 60 seconds.
 async def query_gpt(interaction: discord.Interaction, query: str):
     
-    completion = client.chat.completions.create(
+    completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages = [
             {"role": "system", "content": "You are a helpful assistant"},
@@ -37,7 +38,7 @@ async def query_gpt(interaction: discord.Interaction, query: str):
     )
     
     response = completion.choices[0].message.content
-    await interaction.response.send_message(f"{response}")
+    await interaction.response.send_message(response)
     
 
 # Helper function to encode images to base64.
@@ -123,4 +124,4 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 #  https://www.writebots.com/discord-bot-token/
 #  https://realpython.com/how-to-make-a-discord-bot-python/
 
-client.run('DISCORD_TOKEN')
+client.run('<INSERT YOUR DISCORD_TOKEN HERE>')
